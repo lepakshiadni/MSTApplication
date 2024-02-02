@@ -1,5 +1,5 @@
 import MstLogo from '../images/image 30.svg';
-import profileImg from '../images/profileTrainer.png';
+//import profileImg from '../images/profileTrainer.png';
 import  { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios'
