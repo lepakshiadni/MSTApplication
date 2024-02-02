@@ -24,6 +24,12 @@ jobs:
     - name: Build React App
       run: npm run build
 
+    - name: Lint Code
+      run: npm run lint  # Add this step if you have linting in your project
+
+    - name: Test
+      run: npm test  # Add this step if you have tests in your project
+
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v1
       with:
