@@ -18,22 +18,14 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Remove existing node_modules and package-lock.json
-      run: |
-        rm -rf node_modules
-        rm -f package-lock.json
-
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
     - name: Install ESLint and Prettier
       run: npm install eslint prettier --save-dev
 
     - name: Install ESLint plugins
-      run: npm install eslint-plugin-prettier --save-dev
-
-    - name: Run npm ci
-      run: npm ci
+      run: npm install eslint-plugin-prettier eslint-config-prettier --save-dev
 
     - name: Run ESLint
       run: npm run lint
@@ -52,6 +44,4 @@ jobs:
         aws-region: "us-east-1"
 
     - name: Deploy to S3
-      run: |
-        aws s3 sync build/ s3://www.mindstaybusiness.com/ --delete
-
+      run: aws s3 sync build/ s3://www.mindstaybusiness.com/ --delete
