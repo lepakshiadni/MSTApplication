@@ -19,16 +19,22 @@ jobs:
         node-version: '14'
 
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
+
+    - name: Install ESLint and Prettier
+      run: npm install eslint prettier --save-dev
+
+    - name: Install ESLint plugins
+      run: npm install eslint-plugin-prettier --save-dev
+
+    - name: Run ESLint
+      run: npm run lint
 
     - name: Build React App
       run: npm run build
 
-    - name: Lint Code
-      run: npm run lint  # Add this step if you have linting in your project
-
     - name: Test
-      run: npm test  # Add this step if you have tests in your project
+      run: npm test
 
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v1
