@@ -34,6 +34,5 @@
   },
   "devDependencies": {
     "eslint": "^7.32.0"
-    // Add any other devDependencies needed for linting
   }
 }
