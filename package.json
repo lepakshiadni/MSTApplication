@@ -1,7 +1,7 @@
 {
   "name": "sissoo",
   "version": "1.0.0",
-  "description": "",
+  "description": "A brief description of your project",
   "main": "index.js",
   "scripts": {
     "start": "nodemon App.js",
@@ -10,28 +10,28 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
-  "author": "",
+  "author": "Your Name or Your Organization",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.7",
+    "axios": "^0.21.1",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cloudinary": "^1.41.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2",
+    "express": "^4.17.1",
     "express-validator": "^7.0.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "localStorage": "^1.0.4",
-    "mongodb": "^6.3.0",
-    "mongoose": "^8.0.2",
-    "multer": "^1.4.5-lts.1",
+    "mongodb": "^4.1.0", // Ensure compatibility with Mongoose version
+    "mongoose": "^5.13.2", // Use a stable version compatible with your project
+    "multer": "^1.4.5",
     "multer-storage-cloudinary": "^4.0.0",
-    "nodemon": "^3.0.1",
-    "plivo": "^4.1.0-beta1",
-    "ws": "^8.14.2"
+    "nodemon": "^2.0.7", // Ensure compatibility with other dependencies
+    "plivo": "^0.11.0", // Ensure compatibility with other dependencies
+    "ws": "^8.0.0" // Update to the latest stable version
   },
   "devDependencies": {
     "eslint": "^7.32.0"
