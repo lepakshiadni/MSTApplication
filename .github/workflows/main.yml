@@ -26,9 +26,6 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Check npm version
-      run: npm --version
-
     - name: Install ESLint and Prettier
       run: npm install eslint prettier --save-dev
 
@@ -57,3 +54,4 @@ jobs:
     - name: Deploy to S3
       run: |
         aws s3 sync build/ s3://www.mindstaybusiness.com/ --delete
+
