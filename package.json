@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon App.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"No build steps specified\""
+    "build": "echo \"No build steps specified\"",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -30,5 +31,9 @@
     "nodemon": "^3.0.1",
     "plivo": "^4.1.0-beta1",
     "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
+    // Add any other devDependencies needed for linting
   }
 }
