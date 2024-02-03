@@ -25,13 +25,13 @@
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "localStorage": "^1.0.4",
-    "mongodb": "^4.1.0", // Ensure compatibility with Mongoose version
-    "mongoose": "^5.13.2", // Use a stable version compatible with your project
+    "mongodb": "^4.1.0", 
+    "mongoose": "^5.13.2", 
     "multer": "^1.4.5",
     "multer-storage-cloudinary": "^4.0.0",
-    "nodemon": "^2.0.7", // Ensure compatibility with other dependencies
-    "plivo": "^0.11.0", // Ensure compatibility with other dependencies
-    "ws": "^8.0.0" // Update to the latest stable version
+    "nodemon": "^2.0.7", 
+    "plivo": "^0.11.0", 
+    "ws": "^8.0.0" 
   },
   "devDependencies": {
     "eslint": "^7.32.0"
