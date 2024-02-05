@@ -16,10 +16,11 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4 
       with:
-        node-version: '14'  
+        node-version: '14'
 
     - name: Install Dependencies
-      run: npm ci
+      run: |
+        npm ci || { echo "Failed to install dependencies" ; exit 1; }
 
     - name: Install ESLint and Prettier
       run: npm install eslint@latest prettier@latest --save-dev
@@ -28,7 +29,8 @@ jobs:
       run: npm install eslint-plugin-prettier@latest eslint-config-prettier@latest --save-dev
 
     - name: Run ESLint
-      run: npm run lint
+      run: |
+        npm run lint || { echo "ESLint check failed" ; exit 1; }
 
     - name: Build React App
       run: npm run build
@@ -39,6 +41,7 @@ jobs:
     - name: Install AWS CLI
       run: |
         sudo apt-get install -y awscli
+        aws --version  # Add this line to check the installed AWS CLI version
 
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v1
@@ -49,3 +52,15 @@ jobs:
 
     - name: Deploy to S3
       run: aws s3 sync build/ s3://www.mindstaybusiness.com/ --delete
+
+  cache:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: |
+          **/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
