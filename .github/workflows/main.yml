@@ -22,11 +22,8 @@ jobs:
       run: |
         npm ci || { echo "Failed to install dependencies" ; exit 1; }
 
-    - name: Install ESLint and Prettier
-      run: npm install eslint@latest prettier@latest --save-dev
-
-    - name: Install ESLint plugins
-      run: npm install eslint-plugin-prettier@latest eslint-config-prettier@latest --save-dev
+    - name: Install ESLint and plugins
+      run: npm install eslint@^7.0.0 prettier@^2.0.0 eslint-plugin-prettier@^4.0.0 eslint-config-prettier@^7.0.0 --save-dev
 
     - name: Run ESLint
       run: |
@@ -39,16 +36,13 @@ jobs:
       run: npm test
 
     - name: Install AWS CLI
-      run: |
-        sudo apt-get install -y awscli
-        aws --version  # Add this line to check the installed AWS CLI version
+      run: sudo apt-get install -y awscli
 
-    - name: Set up AWS CLI
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-        aws-region: "us-east-1"
+    - name: Display AWS CLI Version
+      run: aws --version
+
+    - name: Configure AWS CLI
+      run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_KEY }} && aws configure set region us-east-1
 
     - name: Deploy to S3
       run: aws s3 sync build/ s3://www.mindstaybusiness.com/ --delete
