@@ -10,51 +10,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4 
-      with:
-        node-version: '14'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 
+        with:
+          node-version: '14'
 
-    - name: Install Dependencies
-      run: |
-        npm ci || { echo "Failed to install dependencies" ; exit 1; }
+      - name: Install Dependencies
+        run: npm install || { echo "Failed to install dependencies" ; exit 1; }
 
-    - name: Install ESLint and plugins
-      run: npm install eslint@^7.0.0 prettier@^2.0.0 eslint-plugin-prettier@^4.0.0 eslint-config-prettier@^7.0.0 --save-dev
+      - name: Install ESLint and plugins
+        run: npm install eslint@^7.0.0 prettier@^2.0.0 eslint-plugin-prettier@^4.0.0 eslint-config-prettier@^7.0.0 --save-dev
 
-    - name: Run ESLint
-      run: |
-        npm run lint || { echo "ESLint check failed" ; exit 1; }
+      - name: Run ESLint
+        run: npm run lint || { echo "ESLint check failed" ; exit 1; }
 
-    - name: Build React App
-      run: npm run build
+      - name: Build React App
+        run: npm run build
 
-    - name: Test
-      run: npm test
+      - name: Test
+        run: npm test
 
-    - name: Install AWS CLI
-      run: sudo apt-get install -y awscli
+      - name: Install AWS CLI
+        run: sudo apt-get install -y awscli
 
-    - name: Display AWS CLI Version
-      run: aws --version
+      - name: Display AWS CLI Version
+        run: aws --version
 
-    - name: Configure AWS CLI
-      run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_KEY }} && aws configure set region us-east-1
+      - name: Configure AWS CLI
+        run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_KEY }} && aws configure set region us-east-1
 
-    - name: Deploy to S3
-      run: aws s3 sync build/ s3://www.mindstaybusiness.com/ --delete
+      - name: Deploy to S3
+        run: aws s3 sync build/ s3://www.mindstaybusiness.com/ --delete
 
   cache:
+    name: Cache Node Modules
     runs-on: ubuntu-latest
     steps:
-    - name: Cache Node.js modules
-      uses: actions/cache@v2
-      with:
-        path: |
-          **/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ runner.node.version }}
+          restore-keys: |
+            ${{ runner.os }}-node-
