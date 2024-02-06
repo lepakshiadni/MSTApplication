@@ -12,7 +12,6 @@ const feetroute=require('./route/feedroute')
 const os=require('os')
 
 
-
 app.use(bodyparser.json())
 app.use(bodyparser.json({ limit: '30mb' }));
 app.use(bodyparser.urlencoded({ extended: true, limit: '30mb' }));
