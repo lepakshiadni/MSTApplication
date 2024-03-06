@@ -1,59 +1,22 @@
-name: Deploy React App to AWS S3
+name: Handtime # Name of the deployment
 
 on:
-  push:
+  push: # Trigger the workflow when changes are pushed
     branches:
       - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
+jobs: # Any name can be provided
+  build-and-deploy:
+    runs-on: ubuntu-latest # Latest version of Ubuntu
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Checkout # Check out the repository's code into the workflow's execution environment.
+        uses: actions/checkout@v1 # Script actions
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          node-version: '14'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: us-east-1
 
-      - name: Install Dependencies
-        run: npm install || { echo "Failed to install dependencies" ; exit 1; }
-
-      - name: Install ESLint and plugins
-        run: npm install eslint@^7.0.0 prettier@^2.0.0 eslint-plugin-prettier@^4.0.0 eslint-config-prettier@^7.0.0 --save-dev
-
-      - name: Run ESLint
-        run: npm run lint || { echo "ESLint check failed" ; exit 1; }
-
-      - name: Build React App
-        run: npm run build
-
-      - name: Test
-        run: npm test
-
-      - name: Install AWS CLI
-        run: sudo apt-get install -y awscli
-
-      - name: Display AWS CLI Version
-        run: aws --version
-
-      - name: Configure AWS CLI
-        run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_KEY }} && aws configure set region us-east-1
-
-      - name: Deploy to S3
-        run: aws s3 sync build/ s3://www.mindstaybusiness.com/ --delete
-
-  cache:
-    name: Cache Node Modules
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ runner.node.version }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Deploy static site to S3 bucket
+        run: aws s3 sync . s3://msttbucket --delete # Change bucket name
